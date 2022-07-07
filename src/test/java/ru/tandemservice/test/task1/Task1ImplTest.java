@@ -2,7 +2,6 @@ package ru.tandemservice.test.task1;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
@@ -66,26 +65,17 @@ public class Task1ImplTest {
 
     @Test
     public void notEmptyStringCompareTest4() { /* 123abcd 123dcba -1 */
-        Assert.assertEquals(
-                true,
-                Task1Impl.notEmptyCellValueCompare("123abcd", "123dcba") < 0
-        );
+        Assert.assertTrue(Task1Impl.notEmptyCellValueCompare("123abcd", "123dcba") < 0);
     }
 
     @Test
     public void notEmptyStringCompareTest5() { /* 123abcd345 123abcd 1 */
-        Assert.assertEquals(
-                true,
-                Task1Impl.notEmptyCellValueCompare("123abcd345", "123abcd") > 0
-        );
+        Assert.assertTrue(Task1Impl.notEmptyCellValueCompare("123abcd345", "123abcd") > 0);
     }
 
     @Test
     public void notEmptyStringCompareTest6() { /* 123abcd345 123dcba -1 */
-        Assert.assertEquals(
-                true,
-                Task1Impl.notEmptyCellValueCompare("123abcd345", "123dcba") < 0
-        );
+        Assert.assertTrue(Task1Impl.notEmptyCellValueCompare("123abcd345", "123dcba") < 0);
     }
 
     @Test

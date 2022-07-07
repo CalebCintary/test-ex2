@@ -1,15 +1,13 @@
 package ru.tandemservice.test.task1;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class SortTest {
 
-    private static List<String[]> randomSource = new ArrayList<>();
+    private static final List<String[]> randomSource = new ArrayList<>();
 
     static {
         randomSource.add(new String[] {"1", "nikita", "abc"});
