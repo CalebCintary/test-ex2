@@ -1,6 +1,7 @@
 package ru.tandemservice.test.task2;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <h1>Задание №2</h1>
@@ -16,9 +17,41 @@ public class Task2Impl implements IElementNumberAssigner {
     // ваша реализация должна работать, как singleton. даже при использовании из нескольких потоков.
     public static final IElementNumberAssigner INSTANCE = new Task2Impl();
 
+    public static IElementNumberAssigner getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public void assignNumbers(final List<IElement> elements) {
-        // напишите здесь свою реализацию. Мы ждем от вас хорошо структурированного, документированного и понятного кода, работающего за разумное время.
+        AtomicInteger max = new AtomicInteger(elements.get(0).getNumber());
+        elements.forEach(element -> max.set(Math.max(element.getNumber(), max.get())));
+
+
+        do {
+            int differenceIndex = 0;
+            while (elements.get(differenceIndex).getNumber() == differenceIndex) {
+                if (++differenceIndex >= elements.size()) {
+                    break;
+                }
+            }
+
+            if (differenceIndex >= elements.size()) {
+                break;
+            }
+
+            int rabbitPointer = elements.get(differenceIndex).getNumber();
+            elements.get(differenceIndex).setupNumber(max.incrementAndGet());
+            while (true) {
+                int nextRabbitPointer = elements.get(rabbitPointer).getNumber();
+                elements.get(rabbitPointer).setupNumber(rabbitPointer);
+                if (nextRabbitPointer >= elements.size()) {
+                    break;
+                } else {
+                    rabbitPointer = nextRabbitPointer;
+                }
+
+            }
+        } while (true);
     }
 
 }

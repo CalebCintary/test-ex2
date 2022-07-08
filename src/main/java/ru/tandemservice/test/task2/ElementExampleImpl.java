@@ -68,4 +68,9 @@ public final class ElementExampleImpl implements IElement {
     protected Object clone() throws CloneNotSupportedException {
         throw new UnsupportedOperationException(); // клонировать элементы нельзя
     }
+
+    @Override
+    public String toString() {
+        return "ElementExampleImpl(context=" + this.context + ", id=" + this.getId() + ", number=" + this.getNumber() + ")";
+    }
 }
