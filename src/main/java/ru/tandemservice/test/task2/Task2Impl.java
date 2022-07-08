@@ -26,11 +26,13 @@ public class Task2Impl implements IElementNumberAssigner {
         AtomicInteger max = new AtomicInteger(elements.get(0).getNumber());
         elements.forEach(element -> max.set(Math.max(element.getNumber(), max.get())));
 
+        int offset = 0;
 
         do {
-            int differenceIndex = 0;
+            int differenceIndex = offset;
             while (elements.get(differenceIndex).getNumber() == differenceIndex) {
                 if (++differenceIndex >= elements.size()) {
+                    offset = differenceIndex - 1;
                     break;
                 }
             }
@@ -52,8 +54,13 @@ public class Task2Impl implements IElementNumberAssigner {
                 if (!changed) {
                     elements.get(differenceIndex).setupNumber(differenceIndex);
                     continue;
+                } else {
+                    int temp = differenceIndex;
+                    differenceIndex = rabbitPointer;
+                    rabbitPointer = temp;
                 }
             }
+
             elements.get(differenceIndex).setupNumber(max.incrementAndGet());
             while (true) {
                 int nextRabbitPointer = elements.get(rabbitPointer).getNumber();
