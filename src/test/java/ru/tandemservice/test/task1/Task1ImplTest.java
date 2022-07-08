@@ -142,4 +142,14 @@ public class Task1ImplTest {
         );
     }
 
+    @Test
+    public void numberCompare() {
+        Assert.assertTrue(Task1Impl.numberComparison("123123123123123", "123123123123") > 0);
+    }
+
+    @Test
+    public void numberCompare2() {
+        Assert.assertTrue(Task1Impl.numberComparison("123123123123", "123123123123123" ) < 0);
+    }
+
 }

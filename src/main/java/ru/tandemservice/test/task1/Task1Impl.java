@@ -45,7 +45,7 @@ public class Task1Impl implements IStringRowsListSorter {
     }
 
     static int cellValueCompare(final String left, final String right) {
-        // Если первый операнд null то он меньше всего что не null.
+        // Если первый операнд null, то он меньше всего что не null.
         if (left == null) {
             return (right == null ? 0 : -1);
         // Если первый операнд isEmpty, то он больше null, равен empty и меньше !isEmpty.
@@ -63,7 +63,7 @@ public class Task1Impl implements IStringRowsListSorter {
         var aList = split(left);
         var bList = split(right);
 
-        // В задаче не описана ситуация не совпадения количества подстрок, поэтому заполню
+        // В задаче не описана ситуация, в которой не совпадает количество подстрок, поэтому заполню
         // меньший список пустыми подстроками.
         if (aList.size() != bList.size()) {
             for (int i = aList.size(); i < bList.size(); ++i) {
@@ -85,10 +85,7 @@ public class Task1Impl implements IStringRowsListSorter {
         // Second - признак того, что подстрока число.
         // Пожертвую немного памяти, взамен замедления при проверках на try catch от parseInt
         if (a.getSecond() && b.getSecond()) {
-            int aInt = Integer.parseInt(a.getFirst()); // FIXME: Int overflow
-            int bInt = Integer.parseInt(b.getFirst());
-
-            return aInt - bInt;
+            return numberComparison(a.getFirst(), b.getFirst());
         } else {
             // Проверки на empty, когда не совпадает количество подстрок.
             // В случае если есть empty он считается меньшим.
@@ -125,4 +122,47 @@ public class Task1Impl implements IStringRowsListSorter {
 
         return result;
     }
+
+    /**
+     * Выполняет сравнение двух строк, представляющих собой числа.
+     * <p>Позволяет производить сравнение таких чисел, что они больше чем размерность Int. Пределом сравнения является
+     *     размер стека, так как метод рекурсивен</p>
+     * @param a левый операнд сравнения
+     * @param b правый операнд сравнения
+     * @return значение <0, 0 или >0 если левый операнд меньше правого, равен или больше соответственно.
+     */
+    static int numberComparison(final String a, final String b) {
+        int aInt, bInt;
+        try {
+            aInt = Integer.parseInt(a); // Попытка выполнить стандартное сравнение
+            bInt = Integer.parseInt(b);
+        } catch (NumberFormatException ex) { // Переполнение Int
+            String newA = a;
+            String newB = b;
+            int length = a.length();
+
+            if (a.length() != b.length()) {  // Уравнивание длины двух чисел
+                length = Math.max(a.length(), b.length());
+                newA = "0".repeat(length - a.length()) + a;
+                newB = "0".repeat(length - b.length()) + b;
+            }
+
+            int result = numberComparison( // Разделение строк в половину и сравнение левых половин чисел.
+                    newA.substring(0, length / 2 + 1),
+                    newB.substring(0, length / 2 + 1)
+            );
+
+            if (result == 0) { // Если после сравнения левых половин, они оказались равны, то сравниваем правые половины
+                result = numberComparison(
+                        newA.substring(length / 2 + 1),
+                        newB.substring(length / 2 + 1)
+                );
+            }
+
+            return result;
+        }
+
+        return aInt - bInt;
+    }
+
 }

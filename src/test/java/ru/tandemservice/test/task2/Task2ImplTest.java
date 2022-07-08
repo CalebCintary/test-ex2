@@ -1,6 +1,5 @@
 package ru.tandemservice.test.task2;
 
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class Task2ImplTest {
 
-    public static List<IElement> list = new ArrayList<>();
+    public static final List<IElement> list = new ArrayList<>();
 
     public static ElementExampleImpl.Context context;
 
@@ -30,17 +29,6 @@ public class Task2ImplTest {
 
         Collections.shuffle(list);
     }
-
-//    @BeforeEach
-//    public void listSetup() {
-//        context = new ElementExampleImpl.Context();
-//        list.add(new ElementExampleImpl(context, 5));
-//        list.add(new ElementExampleImpl(context, 4));
-//        list.add(new ElementExampleImpl(context, 3));
-//        list.add(new ElementExampleImpl(context, 2));
-//        list.add(new ElementExampleImpl(context, 1));
-//        list.add(new ElementExampleImpl(context, 0));
-//    }
 
     public void printList(List<?> l) {
         l.forEach(System.out::println);

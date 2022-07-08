@@ -40,6 +40,20 @@ public class Task2Impl implements IElementNumberAssigner {
             }
 
             int rabbitPointer = elements.get(differenceIndex).getNumber();
+            if (rabbitPointer >= elements.size()) {
+                boolean changed = false;
+                for (int i = 0; i < elements.size(); ++i) {
+                    if (elements.get(i).getNumber() == differenceIndex) {
+                        rabbitPointer = i;
+                        changed = true;
+                        break;
+                    }
+                }
+                if (!changed) {
+                    elements.get(differenceIndex).setupNumber(differenceIndex);
+                    continue;
+                }
+            }
             elements.get(differenceIndex).setupNumber(max.incrementAndGet());
             while (true) {
                 int nextRabbitPointer = elements.get(rabbitPointer).getNumber();
