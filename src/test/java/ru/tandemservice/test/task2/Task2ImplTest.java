@@ -23,8 +23,14 @@ public class Task2ImplTest {
     public void listSetup() {
         context = new ElementExampleImpl.Context();
         list.clear();
+        List<Integer> available = new ArrayList<>();
+        for (int i = 0; i < ELEMENTS_COUNT * 10; ++i) {
+            available.add(i);
+        }
+        Collections.shuffle(available);
+
         for (int i = 0; i < ELEMENTS_COUNT; ++i) {
-            list.add(new ElementExampleImpl(context, i));
+            list.add(new ElementExampleImpl(context, available.get(i)));
         }
 
         Collections.shuffle(list);
